@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron: '0 22 * * *' # 매일 한국시간 오전 7시 (UTC 22시)
+  workflow_dispatch: # 수동 실행 허용
+
+permissions:
+  contents: write
 
 jobs:
   deploy:
@@ -20,6 +26,25 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Generate Blog Post (on schedule or dispatch)
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: node scripts/generate-us-daily-market-situation.js
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      - name: Commit and Push if changed
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          if ! git diff --cached --quiet; then
+            git commit -m "자동 업데이트: US 시황 글 생성"
+            git push
+          else
+            echo "No changes to commit"
+          fi
 
       - name: Build project
         run: npm run build
