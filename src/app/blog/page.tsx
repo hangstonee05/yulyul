@@ -20,6 +20,7 @@ export default function BlogPage() {
           <Link href="/" className="hover:text-blue-200 flex items-center gap-2">
             <span className="text-xs">←</span> BACK_TO_DASHBOARD
           </Link>
+          <Link href="/about" className="text-blue-500 hover:text-blue-300 transition-colors border-l border-blue-900/50 pl-4 ml-2 uppercase">About_System</Link>
         </div>
         <div className="flex items-center gap-3">
           <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_5px_#10b981]"></span>

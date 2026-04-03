@@ -8,6 +8,7 @@ export interface PostData {
   slug: string;
   title: string;
   date: string;
+  lastModified: string;
   summary: string;
   category: string;
   tags: string[];
@@ -37,11 +38,15 @@ export function getSortedPostsData(): PostData[] {
         date = new Date().toISOString().split('T')[0]; // 기본값
       }
 
+      const stats = fs.statSync(fullPath);
+      const lastModified = stats.mtime.toISOString().split('T')[0];
+
       return {
         ...matterResult.data,
         slug,
         title: matterResult.data.title || 'Untitled',
         date,
+        lastModified,
         summary: matterResult.data.summary || '',
         category: matterResult.data.category || 'Uncategorized',
         tags: matterResult.data.tags || [],
@@ -78,11 +83,15 @@ export async function getPostData(slug: string): Promise<PostData> {
     date = new Date().toISOString().split('T')[0];
   }
 
+  const stats = fs.statSync(fullPath);
+  const lastModified = stats.mtime.toISOString().split('T')[0];
+
   return {
     ...matterResult.data,
     slug,
     title: matterResult.data.title || 'Untitled',
     date,
+    lastModified,
     summary: matterResult.data.summary || '',
     category: matterResult.data.category || 'Uncategorized',
     tags: matterResult.data.tags || [],

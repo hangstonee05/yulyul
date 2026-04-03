@@ -2,6 +2,27 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Link from 'next/link';
 import { getPostData, getAllPostSlugs } from '@/lib/posts';
+import { Metadata } from 'next';
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const postData = await getPostData(slug);
+  
+  return {
+    title: `${postData.title} | YULYULee INTEL`,
+    description: postData.summary,
+    openGraph: {
+      title: postData.title,
+      description: postData.summary,
+      type: 'article',
+      publishedTime: postData.date,
+      authors: ['yulyul'],
+    },
+    alternates: {
+      canonical: `https://yulyul.pages.dev/blog/${slug}`,
+    },
+  };
+}
 
 export async function generateStaticParams() {
   const posts = getAllPostSlugs();
@@ -23,6 +44,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           <Link href="/blog" className="hover:text-blue-200 flex items-center gap-2">
             <span className="text-xs">←</span> BACK_TO_INTEL_ARCHIVE
           </Link>
+          <Link href="/about" className="text-blue-500 hover:text-blue-300 transition-colors border-l border-blue-900/50 pl-4 ml-2 uppercase">About_System</Link>
         </div>
         <div className="flex items-center gap-3">
           <span>REPORT_ID: {slug}</span>
@@ -37,7 +59,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               <span className="text-blue-500 uppercase tracking-widest px-2 py-0.5 bg-blue-950/30 border border-blue-900/50">
                 {postData.category}
               </span>
-              <span className="text-slate-500">{postData.date}</span>
+              <span className="text-slate-500">INIT_DATE: {postData.date}</span>
+              <span className="text-blue-900/60 font-black px-1">//</span>
+              <span className="text-slate-500">LAST_MOD: {postData.lastModified}</span>
             </div>
             <h1 className="text-3xl sm:text-5xl text-white font-bold tracking-tight uppercase">
               {postData.title}
@@ -67,6 +91,108 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               {postData.content}
             </ReactMarkdown>
           </article>
+
+          {/* E-E-A-T Footnote Sections */}
+          <section className="mt-20 pt-12 border-t border-blue-900/30 space-y-12">
+            {/* Intelligence Source & AI Disclosure */}
+            <div className="grid gap-8 sm:grid-cols-2">
+              <div className="bg-slate-950/40 p-6 border border-blue-900/10 rounded-sm">
+                <h3 className="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 bg-blue-600"></span> Intel_Source_Attribution
+                </h3>
+                <p className="text-xs text-slate-500 leading-relaxed mb-4 italic">
+                  본 리포트는 아래 OSINT 공개 출처 정보를 바탕으로 작성되었습니다.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {['CME FedWatch', 'ISM', 'TradingView', 'Google Finance'].map(source => (
+                    <span key={source} className="text-[9px] px-2 py-0.5 bg-blue-950/30 border border-blue-900/30 text-blue-400 font-bold uppercase">
+                      {source}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-emerald-950/5 p-6 border border-emerald-900/20 rounded-sm">
+                <h3 className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 bg-emerald-600"></span> AI_Synthesized_Content
+                </h3>
+                <p className="text-[11px] text-slate-400 leading-relaxed">
+                  본 분석 리포트는 **Gemini AI** 인공지능 시스템에 의해 방대한 데이터를 정제 및 요약하여 생성되었습니다. AI는 복잡한 시장 지표를 신속하게 구조화하는 데 활용되었습니다.
+                </p>
+              </div>
+            </div>
+
+            {/* Analyst Profile (Bio) */}
+            <div 
+              className="bg-blue-900/5 p-8 border border-blue-900/20 flex flex-col sm:flex-row gap-6 items-center sm:items-start"
+              role="complementary"
+              aria-label="Analyst Intelligence Profile"
+            >
+              <div className="w-16 h-16 bg-blue-950 border border-blue-500 flex items-center justify-center text-blue-500 font-bold text-xl flex-shrink-0">
+                YY
+              </div>
+              <div className="text-center sm:text-left">
+                <h4 className="text-white font-bold uppercase tracking-tight mb-1">Lead Analyst: yulyul</h4>
+                <p className="text-[9px] text-blue-400 font-black uppercase tracking-widest mb-3">Chief Intelligence Officer // Asset Surveillance</p>
+                <p className="text-xs text-slate-500 leading-relaxed max-w-xl">
+                  yulyul은 데이터 기반 OSINT 분석을 통해 글로벌 자산 시장의 기회와 위협을 탐지합니다. 
+                  복잡한 경제 흐름을 누구나 이해할 수 있는 직관적인 정보로 가공하여 제공하는 전문가입니다.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Structured Data: BlogPosting & Breadcrumb */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "BlogPosting",
+                "headline": postData.title,
+                "description": postData.summary,
+                "author": {
+                  "@type": "Person",
+                  "name": "yulyul"
+                },
+                "datePublished": postData.date,
+                "dateModified": postData.lastModified,
+                "mainEntityOfPage": {
+                  "@type": "WebPage",
+                  "@id": `https://yulyul.pages.dev/blog/${slug}`
+                }
+              })
+            }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://yulyul.pages.dev"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Blog",
+                    "item": "https://yulyul.pages.dev/blog"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": postData.title,
+                    "item": `https://yulyul.pages.dev/blog/${slug}`
+                  }
+                ]
+              })
+            }}
+          />
         </main>
       </div>
 

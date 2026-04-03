@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://yulyul.pages.dev
-
-# Sitemaps
-Sitemap: https://yulyul.pages.dev/sitemap.xml

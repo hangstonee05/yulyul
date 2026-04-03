@@ -53,6 +53,7 @@ export default function StockDetailClient({ stock }: { stock: Stock }) {
             <span className="text-xs">←</span> BACK_TO_MONITOR
           </Link>
           <Link href="/blog" className="text-blue-500 hover:text-blue-200 border-l border-blue-900/50 pl-4 ml-2">BLOG_INTEL</Link>
+          <Link href="/about" className="text-blue-500 hover:text-blue-200 border-l border-blue-900/50 pl-4 ml-2 uppercase">About_System</Link>
         </div>
         <div>SECURE_OSINT_REPORT // {stock.ticker}</div>
       </div>

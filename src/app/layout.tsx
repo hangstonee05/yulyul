@@ -27,7 +27,24 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {/* Organization Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "YULYULee Intelligence Division",
+              "url": "https://yulyul.pages.dev",
+              "logo": "https://yulyul.pages.dev/icon.png",
+              "description": "Global Asset Surveillance & Strategic Intelligence Monitoring System",
+              "sameAs": []
+            })
+          }}
+        />
+        {children}
+      </body>
     </html>
   );
 }
