@@ -120,6 +120,7 @@ export default function Home() {
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blue-500"></div> CONN: ESTABLISHED</span>
           <span className="hidden sm:inline">SECURE_CHANNEL: 256-BIT</span>
+          <Link href="/blog" className="text-blue-500 hover:text-blue-300 transition-colors border-l border-blue-900/50 pl-4 ml-2">BLOG_INTEL</Link>
         </div>
         <div className="flex items-center gap-3">
           <span className="live-dot"></span>

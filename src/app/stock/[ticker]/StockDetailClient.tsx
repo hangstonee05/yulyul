@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import TradingViewChart from "./TradingViewChart";
 
 interface Stock {
   name: string;
@@ -21,6 +22,20 @@ interface Stock {
 }
 
 export default function StockDetailClient({ stock }: { stock: Stock }) {
+  // TradingView 심볼 매핑 로직
+  const getTradingViewSymbol = (ticker: string) => {
+    const mapping: { [key: string]: string } = {
+      "NVDA": "NASDAQ:NVDA",
+      "TSLA": "NASDAQ:TSLA",
+      "GOOGL": "NASDAQ:GOOGL",
+      "005930.KS": "KRX:005930",
+      "000660.KS": "KRX:000660",
+    };
+    return mapping[ticker] || ticker;
+  };
+
+  const tvSymbol = getTradingViewSymbol(stock.ticker);
+
   return (
     <div className="min-h-screen bg-black text-slate-300 font-mono relative selection:bg-blue-500 selection:text-white pb-20">
       <style jsx global>{`
@@ -37,6 +52,7 @@ export default function StockDetailClient({ stock }: { stock: Stock }) {
           <Link href="/" className="hover:text-blue-200 flex items-center gap-2">
             <span className="text-xs">←</span> BACK_TO_MONITOR
           </Link>
+          <Link href="/blog" className="text-blue-500 hover:text-blue-200 border-l border-blue-900/50 pl-4 ml-2">BLOG_INTEL</Link>
         </div>
         <div>SECURE_OSINT_REPORT // {stock.ticker}</div>
       </div>
@@ -64,34 +80,14 @@ export default function StockDetailClient({ stock }: { stock: Stock }) {
         <div className="grid gap-12 lg:grid-cols-3">
           {/* Left Column: Chart & About */}
           <div className="lg:col-span-2 space-y-12">
-            {/* Mock Chart Area */}
-            <section className="border border-blue-900/50 bg-slate-950/20 p-6 rounded-sm">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xs font-bold text-slate-100 uppercase tracking-widest">Performance_Timeline (7D)</h2>
-                <div className="text-[10px] text-emerald-400 font-bold px-2 py-0.5 bg-emerald-950/30">TREND: STABLE</div>
+            {/* Real-Time TradingView Chart Area */}
+            <section className="border border-blue-900/50 bg-slate-950/20 p-1 rounded-sm overflow-hidden">
+              <div className="flex justify-between items-center p-4">
+                <h2 className="text-xs font-bold text-slate-100 uppercase tracking-widest">Live_Asset_Surveillance</h2>
+                <div className="text-[10px] text-emerald-400 font-bold px-2 py-0.5 bg-emerald-950/30 animate-pulse">STREAM: ACTIVE</div>
               </div>
-              <div className="h-64 w-full flex items-end justify-between gap-2 px-4 pb-4 border-b border-blue-900/30">
-                {stock.chart.map((val, i) => {
-                  const max = Math.max(...stock.chart);
-                  const min = Math.min(...stock.chart);
-                  const height = ((val - min) / (max - min)) * 100 + 10;
-                  return (
-                    <div 
-                      key={i} 
-                      className="bg-blue-600/40 w-full group relative transition-all hover:bg-blue-400"
-                      style={{ height: `${height}%` }}
-                    >
-                      <div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-blue-600 text-white text-[9px] px-1 py-0.5 transition-opacity whitespace-nowrap">
-                        {val}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="flex justify-between mt-4 text-[9px] text-slate-600 font-bold uppercase tracking-widest">
-                <span>D-6</span>
-                <span>D-3</span>
-                <span>PRESENT</span>
+              <div className="w-full bg-black">
+                <TradingViewChart symbol={tvSymbol} />
               </div>
             </section>
 
