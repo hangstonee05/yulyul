@@ -58,6 +58,12 @@ export function getSortedPostsData(): PostData[] {
   return allPostsData.sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
+export function getAllCategories(): string[] {
+  const posts = getSortedPostsData();
+  const categories = posts.map(post => post.category);
+  return Array.from(new Set(categories));
+}
+
 export function getAllPostSlugs() {
   if (!fs.existsSync(postsDirectory)) {
     return [];
