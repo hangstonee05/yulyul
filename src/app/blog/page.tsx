@@ -14,21 +14,7 @@ export default function BlogPage() {
       {/* 테마용 스캔라인 효과 */}
       <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-10 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%]"></div>
 
-      {/* 상단 알림 바 */}
-      <div className="bg-blue-900/20 border-b border-blue-900/50 py-2 px-6 text-[10px] text-blue-400 font-bold flex justify-between items-center z-10 relative">
-        <div className="flex items-center gap-4">
-          <Link href="/" className="hover:text-blue-200 flex items-center gap-2">
-            <span className="text-xs">←</span> BACK_TO_DASHBOARD
-          </Link>
-          <Link href="/about" className="text-blue-500 hover:text-blue-300 transition-colors border-l border-blue-900/50 pl-4 ml-2 uppercase">About_System</Link>
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_5px_#10b981]"></span>
-          <span>INTEL_FEED: LIVE</span>
-        </div>
-      </div>
-
-      <div className="mx-auto max-w-4xl px-6 py-12 relative z-10">
+      <div className="mx-auto max-w-4xl px-6 py-6 relative z-10">
         {/* 헤더 섹션 */}
         <header className="mb-16 border-l-4 border-blue-600 pl-6 py-2">
           <h1 className="text-3xl sm:text-4xl text-white font-bold tracking-tight mb-2 uppercase">

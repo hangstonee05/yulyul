@@ -34,34 +34,24 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   const postData = await getPostData(slug);
 
   return (
-    <div className="min-h-screen bg-black text-slate-300 font-mono relative selection:bg-blue-500 selection:text-white">
+    <div className="min-h-screen bg-black text-slate-300 font-mono relative selection:bg-blue-500 selection:text-white overflow-x-hidden">
       {/* 테마용 스캔라인 효과 */}
       <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-10 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%]"></div>
 
-      {/* 상단 알림 바 */}
-      <div className="bg-blue-900/20 border-b border-blue-900/50 py-2 px-6 text-[10px] text-blue-400 font-bold flex justify-between items-center z-10 relative">
-        <div className="flex items-center gap-4">
-          <Link href="/blog" className="hover:text-blue-200 flex items-center gap-2">
-            <span className="text-xs">←</span> BACK_TO_INTEL_ARCHIVE
-          </Link>
-          <Link href="/about" className="text-blue-500 hover:text-blue-300 transition-colors border-l border-blue-900/50 pl-4 ml-2 uppercase">About_System</Link>
-        </div>
-        <div className="flex items-center gap-3">
-          <span>REPORT_ID: {slug}</span>
-        </div>
-      </div>
-
-      <div className="mx-auto max-w-4xl px-6 py-20 relative z-10">
+      <div className="mx-auto max-w-4xl px-6 py-12 relative z-10">
         {/* 헤더 섹션 */}
         <header className="mb-16 border-l-4 border-blue-600 pl-6 py-2">
           <div className="flex flex-col gap-4 mb-4">
-            <div className="flex items-center gap-3 text-[10px] font-bold">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[10px] font-bold">
               <span className="text-blue-500 uppercase tracking-widest px-2 py-0.5 bg-blue-950/30 border border-blue-900/50">
                 {postData.category}
               </span>
-              <span className="text-slate-500">INIT_DATE: {postData.date}</span>
-              <span className="text-blue-900/60 font-black px-1">//</span>
-              <span className="text-slate-500">LAST_MOD: {postData.lastModified}</span>
+              <div className="flex items-center gap-3">
+                <span className="text-slate-500">INIT_DATE: {postData.date}</span>
+                <span className="text-blue-900/60 font-black px-1 hidden sm:inline">//</span>
+                <span className="text-slate-500 hidden sm:inline">LAST_MOD: {postData.lastModified}</span>
+              </div>
+              <span className="text-slate-500 sm:hidden">LAST_MOD: {postData.lastModified}</span>
             </div>
             <h1 className="text-3xl sm:text-5xl text-white font-bold tracking-tight uppercase">
               {postData.title}

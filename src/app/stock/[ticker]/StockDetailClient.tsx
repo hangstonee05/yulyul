@@ -46,19 +46,7 @@ export default function StockDetailClient({ stock }: { stock: Stock }) {
         .glow-text { text-shadow: 0 0 10px rgba(37, 99, 235, 0.5); }
       `}</style>
 
-      {/* Top Status Bar */}
-      <div className="bg-blue-900/20 border-b border-blue-900/50 py-2 px-6 text-[10px] text-blue-400 font-bold flex justify-between items-center z-10 relative">
-        <div className="flex items-center gap-4">
-          <Link href="/" className="hover:text-blue-200 flex items-center gap-2">
-            <span className="text-xs">←</span> BACK_TO_MONITOR
-          </Link>
-          <Link href="/blog" className="text-blue-500 hover:text-blue-200 border-l border-blue-900/50 pl-4 ml-2">BLOG_INTEL</Link>
-          <Link href="/about" className="text-blue-500 hover:text-blue-200 border-l border-blue-900/50 pl-4 ml-2 uppercase">About_System</Link>
-        </div>
-        <div>SECURE_OSINT_REPORT // {stock.ticker}</div>
-      </div>
-
-      <div className="mx-auto max-w-5xl px-6 py-12 relative z-10">
+      <div className="mx-auto max-w-5xl px-6 py-6 relative z-10">
         {/* Header Section */}
         <header className="mb-12">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">

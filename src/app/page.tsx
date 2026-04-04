@@ -70,7 +70,7 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen bg-black text-slate-300 font-mono relative selection:bg-blue-500 selection:text-white">
+    <div className="min-h-screen bg-black text-slate-300 font-mono relative selection:bg-blue-500 selection:text-white overflow-x-hidden">
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;700&display=swap');
         
@@ -115,23 +115,9 @@ export default function Home() {
 
       <div className="scanlines"></div>
 
-      {/* 상단 알림 바 */}
-      <div className="bg-blue-900/20 border-b border-blue-900/50 py-2 px-6 text-[10px] text-blue-400 font-bold flex justify-between items-center z-10 relative">
-        <div className="flex items-center gap-4">
-          <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-blue-500"></div> CONN: ESTABLISHED</span>
-          <span className="hidden sm:inline">SECURE_CHANNEL: 256-BIT</span>
-          <Link href="/blog" className="text-blue-500 hover:text-blue-300 transition-colors border-l border-blue-900/50 pl-4 ml-2">BLOG_INTEL</Link>
-          <Link href="/about" className="text-blue-500 hover:text-blue-300 transition-colors border-l border-blue-900/50 pl-4 ml-2 uppercase">About_System</Link>
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="live-dot"></span>
-          <span>LIVE_OSINT_FEED</span>
-        </div>
-      </div>
-
-      <div className="mx-auto max-w-6xl px-6 py-12 relative z-10">
+      <div className="mx-auto max-w-6xl px-6 py-6 relative z-10">
         {/* 1. 메인 헤더 */}
-        <header className="mb-20 text-center sm:text-left border-l-4 border-blue-600 pl-6 py-2">
+        <header className="mb-12 text-center sm:text-left border-l-4 border-blue-600 pl-6 py-2">
           <h1 className="osint-title text-2xl sm:text-4xl text-white glow-text mb-4">
             STOCK INTELLIGENCE<br/>
             <span className="text-blue-500">DIVISION</span>
@@ -176,7 +162,7 @@ export default function Home() {
 
       {/* 4. 하단 기밀 배너 */}
       <footer className="mt-32 w-full relative z-10">
-        <div className="bg-red-900/90 py-3 text-center text-white text-[11px] font-black tracking-[0.5em] uppercase border-y border-red-500/50">
+        <div className="bg-red-900/90 py-3 text-center text-white text-[10px] sm:text-[11px] font-black tracking-[0.2em] sm:tracking-[0.5em] uppercase border-y border-red-500/50">
           /// CLASSIFIED INFORMATION - AUTHORIZED PERSONNEL ONLY ///
         </div>
         <div className="bg-slate-950 py-10 px-6 text-[10px] text-slate-600 flex flex-col sm:flex-row justify-between items-center gap-4">
