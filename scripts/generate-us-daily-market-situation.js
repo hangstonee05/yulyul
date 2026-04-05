@@ -45,10 +45,10 @@ async function generateMarketPost() {
     const day = String(d.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
-  
+
   const todayStr = formatDate(today);
   const yesterdayStr = formatDate(yesterday);
-  
+
   // 휴장일 체크
   if (isUSMarketHoliday(today)) {
     console.log(`어제(${yesterdayStr})는 휴장일(주말 또는 공휴일)이었습니다. 스크립트를 종료합니다.`);
@@ -63,8 +63,16 @@ async function generateMarketPost() {
 
   // 2단계: Gemini AI로 블로그 글 생성
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`;
-  
+
   const prompt = `당신은 전문 주식 분석가이자 친근한 블로거입니다. 당신의 닉네임은 'yulyul'입니다. ${yesterdayStr}(미국 현지 시각 기준)의 미국 주식 시장 시황을 바탕으로 블로그 글을 작성해 주세요.
+
+[작성 가이드라인]
+1. **시장 종합**: 3대 주요 지수(다우, S&P500, 나스닥)의 마감 현황과 등락 원인을 설명해 주세요.
+2. **거시 지표**: 유가, 미국 국채 금리, 금, 비트코인의 가격 동향과 이것이 증시에 미친 영향을 포함해 주세요.
+3. **주요 흐름 및 특징주**: 당일 시장의 핵심 테마와 주도주, 혹은 실적 발표 등으로 급등락한 특징적인 종목을 분석해 주세요.
+4. **섹터별 동향**: 주요 섹터(기술, 에너지, 금융, 헬스케어 등)별 흐름을 간략히 다뤄 주세요.
+5. **어조**: 친근하면서도 전문성이 느껴지는 'yulyul' 블로거 톤으로 작성해 주세요.
+6. **분량**: 풍부한 정보를 위해 본문은 6,000자 내외로 상세하게 작성해 주세요.
 
 아래 형식으로 출력해줘. 반드시 이 형식만 출력하고 다른 텍스트는 없이:
 ---
@@ -75,14 +83,14 @@ category: 정보
 tags: [태그1, 태그2, 태그3]
 ---
 
-(본문: 1000자 이상, ${yesterdayStr}의 구체적인 지수(다우, S&P500, 나스닥)와 주요 이슈를 포함하여 친근하고 정보성 있는 블로그 톤으로 작성)
+(본문)
 
 마지막 줄에 FILENAME: ${todayStr}-us-daily-(영문키워드) 형식으로 파일명도 출력해줘. 키워드는 영문 1~2단어로.`;
 
   try {
     const response = await fetch(endpoint, {
       method: 'POST',
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
         'x-goog-api-key': apiKey
       },
@@ -92,7 +100,7 @@ tags: [태그1, 태그2, 태그3]
     });
 
     const data = await response.json();
-    
+
     if (data.error) {
       throw new Error(`Gemini API 에러: ${data.error.message}`);
     }
