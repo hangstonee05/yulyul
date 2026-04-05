@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 
 export default function Sidebar() {
-  const { isMenuOpen, categories, activeCategory, setActiveCategory } = useSidebar();
+  const { isMenuOpen, setIsMenuOpen, categories, activeCategory, setActiveCategory } = useSidebar();
   const pathname = usePathname();
   const [isBlogExpanded, setIsBlogExpanded] = useState(true);
 
@@ -28,6 +28,20 @@ export default function Sidebar() {
       setIsBlogExpanded(saved === "true");
     }
   }, []);
+
+  // 하위 메뉴 클릭 처리
+  const handleLinkClick = (hasChildren: boolean = false) => {
+    if (hasChildren) {
+      // 하위 메뉴가 있으면 펼침 상태로 변경
+      setIsBlogExpanded(true);
+      localStorage.setItem("sidebar_blog_expanded", "true");
+    } else {
+      // 하위 메뉴가 없으면 모바일 환경에서 사이드바를 닫음
+      if (window.innerWidth < 1024) {
+        setIsMenuOpen(false);
+      }
+    }
+  };
 
   // 상태 변경 시 로컬 스토리지에 저장
   const toggleBlog = (e: React.MouseEvent) => {
@@ -59,7 +73,10 @@ export default function Sidebar() {
           <nav className="space-y-2 text-[11px]">
             <Link
               href="/"
-              onClick={() => setActiveCategory(null)}
+              onClick={() => {
+                setActiveCategory(null);
+                handleLinkClick(false);
+              }}
               className={`flex items-center gap-3 px-3 py-2 rounded-sm transition-colors ${
                 isActive("/") 
                   ? 'bg-blue-600/20 text-blue-400 border border-blue-500/30 font-bold' 
@@ -74,7 +91,10 @@ export default function Sidebar() {
               <div className="flex items-center gap-1">
                 <Link
                   href="/blog"
-                  onClick={() => setActiveCategory(null)}
+                  onClick={() => {
+                    setActiveCategory(null);
+                    handleLinkClick(true);
+                  }}
                   className={`flex-grow flex items-center gap-3 px-3 py-2 rounded-sm transition-colors ${
                     isBlog && !activeCategory
                       ? 'bg-blue-600/20 text-blue-400 border border-blue-500/30 font-bold' 
@@ -102,7 +122,10 @@ export default function Sidebar() {
                     <Link
                       key={cat}
                       href={`/blog?category=${cat}`}
-                      onClick={() => setActiveCategory(cat)}
+                      onClick={() => {
+                        setActiveCategory(cat);
+                        handleLinkClick(false);
+                      }}
                       className={`w-full text-left flex items-center gap-3 px-3 py-2 rounded-sm transition-colors relative ${
                         activeCategory === cat 
                           ? 'bg-blue-600/10 text-blue-400 font-bold' 
@@ -120,6 +143,7 @@ export default function Sidebar() {
 
             <Link
               href="/about"
+              onClick={() => handleLinkClick(false)}
               className={`flex items-center gap-3 px-3 py-2 rounded-sm transition-colors ${
                 isActive("/about") 
                   ? 'bg-blue-600/20 text-blue-400 border border-blue-500/30 font-bold' 
