@@ -25,13 +25,27 @@ function isUSMarketHoliday(date) {
   return holidays.some(h => h.month === month && h.day === day);
 }
 
+// 한국 시간(KST, UTC+9) 기준의 Date 객체 생성
+function getKSTDate() {
+  const curr = new Date();
+  const utc = curr.getTime() + (curr.getTimezoneOffset() * 60 * 1000);
+  const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+  return new Date(utc + KR_TIME_DIFF);
+}
+
 async function generateMarketPost() {
-  const today = new Date();
+  const today = getKSTDate();
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
 
-  // YYYY-MM-DD 형식의 날짜 문자열 생성
-  const formatDate = (d) => d.toISOString().split('T')[0];
+  // YYYY-MM-DD 형식의 날짜 문자열 생성 (KST 기준)
+  const formatDate = (d) => {
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+  
   const todayStr = formatDate(today);
   const yesterdayStr = formatDate(yesterday);
   
