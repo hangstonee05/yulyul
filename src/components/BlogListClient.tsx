@@ -6,6 +6,8 @@ import { useSearchParams } from "next/navigation";
 import { PostData } from '@/lib/posts';
 import { ChevronRight, FileText } from 'lucide-react';
 import { useSidebar } from "@/context/SidebarContext";
+import React from 'react';
+import AdBanner from "@/components/AdBanner";
 
 interface BlogListClientProps {
   allPostsData: PostData[];
@@ -55,9 +57,16 @@ export default function BlogListClient({ allPostsData, categories }: BlogListCli
         </header>
 
         <div className="space-y-10">
-          {filteredPosts.map(({ slug, date, title, summary, tags, category }) => (
-            <article key={slug} className="group relative animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <div className="absolute -left-6 top-0 h-full w-[2px] bg-blue-900/30 group-hover:bg-blue-500 transition-colors"></div>
+          {filteredPosts.map(({ slug, date, title, summary, tags, category }, index) => (
+            <React.Fragment key={slug}>
+              {index === 1 && (
+                <div className="py-4 my-2 opacity-90 border-y border-dashed border-slate-800/50">
+                  <span className="text-[8px] text-blue-900 absolute pl-2 uppercase font-black tracking-widest mt-[-14px]">SPONSORED_INTEL</span>
+                  <AdBanner />
+                </div>
+              )}
+              <article className="group relative animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <div className="absolute -left-6 top-0 h-full w-[2px] bg-blue-900/30 group-hover:bg-blue-500 transition-colors"></div>
               
               <div className="flex flex-col gap-3">
                 <div className="flex items-center gap-4 text-[10px] font-bold">
@@ -92,6 +101,7 @@ export default function BlogListClient({ allPostsData, categories }: BlogListCli
                 CLASSIFIED_INTEL
               </div>
             </article>
+            </React.Fragment>
           ))}
 
           {filteredPosts.length === 0 && (

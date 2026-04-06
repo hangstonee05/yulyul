@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import AdBanner from "@/components/AdBanner";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "@/context/SidebarContext";
 import { 
@@ -155,6 +156,11 @@ export default function Sidebar() {
             </Link>
           </nav>
         </section>
+
+        {/* 애드센스 (사이드바 하단) */}
+        <div className="mt-4 px-3">
+          <AdBanner />
+        </div>
 
         {/* 푸터 영역 */}
         <div className="mt-auto pt-10">

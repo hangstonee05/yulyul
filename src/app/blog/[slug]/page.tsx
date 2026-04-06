@@ -3,6 +3,7 @@ import remarkGfm from 'remark-gfm';
 import Link from 'next/link';
 import { getPostData, getAllPostSlugs } from '@/lib/posts';
 import { Metadata } from 'next';
+import AdBanner from "@/components/AdBanner";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -81,6 +82,11 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               {postData.content}
             </ReactMarkdown>
           </article>
+
+          {/* 기사 하단 광고 배너 */}
+          <div className="mt-8">
+            <AdBanner />
+          </div>
 
           {/* E-E-A-T Footnote Sections */}
           <section className="mt-20 pt-12 border-t border-blue-900/30 space-y-12">

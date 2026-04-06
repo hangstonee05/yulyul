@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import TradingViewChart from "./TradingViewChart";
+import AdBanner from "@/components/AdBanner";
 
 interface Stock {
   name: string;
@@ -120,8 +121,13 @@ export default function StockDetailClient({ stock }: { stock: Stock }) {
         </div>
       </div>
 
+      {/* 주식 상세페이지 광고 지면 */}
+      <div className="mx-auto max-w-5xl px-6 pb-12 relative z-10 text-center">
+        <AdBanner />
+      </div>
+
       {/* Red Banner Footer */}
-      <footer className="mt-20 w-full">
+      <footer className="mt-8 w-full">
         <div className="bg-red-900/90 py-3 text-center text-white text-[11px] font-black tracking-[0.5em] uppercase border-y border-red-500/50">
           /// CLASSIFIED REPORT: {stock.ticker} - ACCESS LOGGED ///
         </div>

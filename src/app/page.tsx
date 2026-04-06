@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import AdBanner from "@/components/AdBanner";
 
 // 주식 정보의 형식을 정의해요
 interface Stock {
@@ -141,6 +142,9 @@ export default function Home() {
               ))}
             </div>
           </section>
+
+          {/* 광고 배너 */}
+          <AdBanner />
 
           {/* 3. KR Stocks */}
           <section>
