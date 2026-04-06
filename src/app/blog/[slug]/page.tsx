@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       authors: ['yulyul'],
     },
     alternates: {
-      canonical: `https://yulyul.pages.dev/blog/${slug}`,
+      canonical: `https://yulyulee.com/blog/${slug}`,
     },
   };
 }
@@ -149,7 +149,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 "dateModified": postData.lastModified,
                 "mainEntityOfPage": {
                   "@type": "WebPage",
-                  "@id": `https://yulyul.pages.dev/blog/${slug}`
+                  "@id": `https://yulyulee.com/blog/${slug}`
                 }
               })
             }}
@@ -165,19 +165,19 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                     "@type": "ListItem",
                     "position": 1,
                     "name": "Home",
-                    "item": "https://yulyul.pages.dev"
+                    "item": "https://yulyulee.com"
                   },
                   {
                     "@type": "ListItem",
                     "position": 2,
                     "name": "Blog",
-                    "item": "https://yulyul.pages.dev/blog"
+                    "item": "https://yulyulee.com/blog"
                   },
                   {
                     "@type": "ListItem",
                     "position": 3,
                     "name": postData.title,
-                    "item": `https://yulyul.pages.dev/blog/${slug}`
+                    "item": `https://yulyulee.com/blog/${slug}`
                   }
                 ]
               })

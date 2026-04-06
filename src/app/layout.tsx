@@ -53,8 +53,8 @@ export default function RootLayout({
                 "@context": "https://schema.org",
                 "@type": "Organization",
                 "name": "YULYULee Intelligence Division",
-                "url": "https://yulyul.pages.dev",
-                "logo": "https://yulyul.pages.dev/icon.png",
+                "url": "https://yulyulee.com",
+                "logo": "https://yulyulee.com/icon.png",
                 "description": "Global Asset Surveillance & Strategic Intelligence Monitoring System",
                 "sameAs": []
               })

@@ -3,7 +3,7 @@ import { MetadataRoute } from 'next';
 import { getSortedPostsData } from '@/lib/posts';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://yulyul.pages.dev';
+  const baseUrl = 'https://yulyulee.com';
   const posts = getSortedPostsData();
 
   const blogPosts = posts.map((post) => ({
