@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import Link from "next/link";
 import StockDetailClient from "./StockDetailClient";
+import type { Metadata } from "next";
 
 // 주식 정보 타입 정의
 interface Stock {
@@ -35,7 +36,35 @@ export async function generateStaticParams() {
   }));
 }
 
-// 2. [서버사이드] 페이지 컴포넌트
+// 2. [서버사이드] 동적 메타데이터 생성 (SEO 주식 상세페이지 최적화)
+export async function generateMetadata({ params }: { params: Promise<{ ticker: string }> }): Promise<Metadata> {
+  const { ticker } = await params;
+  
+  const filePath = path.join(process.cwd(), "public/data/stock-info.json");
+  const jsonData = fs.readFileSync(filePath, "utf-8");
+  const data = JSON.parse(jsonData);
+  
+  const allStocks = [...data.usStocks, ...data.krStocks];
+  const stock = allStocks.find((s) => s.ticker === decodeURIComponent(ticker));
+
+  if (!stock) {
+    return {
+      title: "Asset Not Found | YULYULee Intelligence",
+    };
+  }
+
+  return {
+    title: `${stock.name} (${stock.ticker}) 주가 및 기업 인텔리전스 | YULYULee INTEL`,
+    description: stock.description.slice(0, 160), // 구글 검색 결과에 보여줄 요약 설명 (초반 160자)
+    openGraph: {
+      title: `${stock.name} 주식 정보 밎 실시간 지표`,
+      description: stock.description.slice(0, 160),
+      type: "website",
+    },
+  };
+}
+
+// 3. [서버사이드] 페이지 컴포넌트
 export default async function Page({ params }: { params: Promise<{ ticker: string }> }) {
   const { ticker } = await params;
   
