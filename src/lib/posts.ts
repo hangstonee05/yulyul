@@ -76,6 +76,26 @@ export function getAllPostSlugs() {
   });
 }
 
+export function getAdjacentPosts(currentSlug: string): {
+  prev: { slug: string; title: string } | null;
+  next: { slug: string; title: string } | null;
+} {
+  const allPosts = getSortedPostsData(); // 최신순 정렬
+  const currentIndex = allPosts.findIndex((p) => p.slug === currentSlug);
+
+  if (currentIndex === -1) return { prev: null, next: null };
+
+  // 최신순 정렬이므로: 인덱스 -1이 "더 최신(다음글)", 인덱스 +1이 "더 오래된(이전글)"
+  const next = currentIndex > 0
+    ? { slug: allPosts[currentIndex - 1].slug, title: allPosts[currentIndex - 1].title }
+    : null;
+  const prev = currentIndex < allPosts.length - 1
+    ? { slug: allPosts[currentIndex + 1].slug, title: allPosts[currentIndex + 1].title }
+    : null;
+
+  return { prev, next };
+}
+
 export async function getPostData(slug: string): Promise<PostData> {
   const fullPath = path.join(postsDirectory, `${slug}.md`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');

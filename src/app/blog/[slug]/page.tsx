@@ -1,7 +1,7 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Link from 'next/link';
-import { getPostData, getAllPostSlugs } from '@/lib/posts';
+import { getPostData, getAllPostSlugs, getAdjacentPosts } from '@/lib/posts';
 import { Metadata } from 'next';
 import AdBanner from "@/components/AdBanner";
 
@@ -33,6 +33,7 @@ export async function generateStaticParams() {
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const postData = await getPostData(slug);
+  const { prev, next } = getAdjacentPosts(slug);
 
   return (
     <div className="min-h-screen bg-black text-slate-300 font-mono relative selection:bg-blue-500 selection:text-white overflow-x-hidden">
@@ -87,6 +88,53 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           <div className="mt-8">
             <AdBanner />
           </div>
+
+          {/* 이전글 / 다음글 네비게이션 */}
+          <nav className="mt-8 pb-4 relative z-10" aria-label="Post navigation">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* 이전글 (더 오래된 글) */}
+              <div>
+                {prev ? (
+                  <Link
+                    href={`/blog/${prev.slug}`}
+                    className="group flex flex-col gap-1 p-4 border border-blue-900/30 bg-slate-950/20 hover:border-blue-500/50 hover:bg-slate-900/40 transition-all rounded-sm"
+                  >
+                    <span className="text-[9px] text-slate-600 font-bold uppercase tracking-widest group-hover:text-blue-500 transition-colors flex items-center gap-1">
+                      ← PREV_INTEL
+                    </span>
+                    <span className="text-sm text-slate-300 font-bold group-hover:text-white transition-colors line-clamp-2">
+                      {prev.title}
+                    </span>
+                  </Link>
+                ) : (
+                  <div className="p-4 border border-dashed border-slate-800/30 rounded-sm">
+                    <span className="text-[9px] text-slate-700 font-bold uppercase tracking-widest">← 이전 글 없음</span>
+                  </div>
+                )}
+              </div>
+
+              {/* 다음글 (더 최신 글) */}
+              <div>
+                {next ? (
+                  <Link
+                    href={`/blog/${next.slug}`}
+                    className="group flex flex-col gap-1 p-4 border border-blue-900/30 bg-slate-950/20 hover:border-blue-500/50 hover:bg-slate-900/40 transition-all rounded-sm text-right"
+                  >
+                    <span className="text-[9px] text-slate-600 font-bold uppercase tracking-widest group-hover:text-blue-500 transition-colors flex items-center justify-end gap-1">
+                      NEXT_INTEL →
+                    </span>
+                    <span className="text-sm text-slate-300 font-bold group-hover:text-white transition-colors line-clamp-2">
+                      {next.title}
+                    </span>
+                  </Link>
+                ) : (
+                  <div className="p-4 border border-dashed border-slate-800/30 rounded-sm text-right">
+                    <span className="text-[9px] text-slate-700 font-bold uppercase tracking-widest">다음 글 없음 →</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </nav>
 
           {/* E-E-A-T Footnote Sections */}
           <section className="mt-20 pt-12 border-t border-blue-900/30 space-y-12">
@@ -192,8 +240,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         </main>
       </div>
 
+
       {/* 하단 기밀 배너 */}
-      <footer className="mt-32 w-full">
+      <footer className="mt-8 w-full">
         <div className="bg-red-900/90 py-3 text-center text-white text-[11px] font-black tracking-[0.5em] uppercase border-y border-red-500/50">
           /// END_OF_REPORT - LOGS_ENCRYPTED ///
         </div>
