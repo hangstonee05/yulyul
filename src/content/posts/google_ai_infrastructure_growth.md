@@ -249,5 +249,3 @@ Google(Alphabet)은 **AI 시대의 "인프라 왕"**입니다.
 댓글로 당신의 분석과 투자 관점을 공유해주세요! 기관 분석가들도 주목합니다. 📝
 
 ---
-
-FILENAME: google ai infrastructure growth
