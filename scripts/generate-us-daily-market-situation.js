@@ -75,6 +75,7 @@ async function generateMarketPost() {
 6. **분량**: 풍부한 정보를 위해 본문은 6,000자 내외로 상세하게 작성해 주세요.
 
 아래 형식으로 출력해줘. 반드시 이 형식만 출력하고 다른 텍스트는 없이:
+
 ---
 title: "(친근하고 흥미로운 제목)"
 date: ${todayStr}
@@ -85,6 +86,7 @@ tags: [태그1, 태그2, 태그3]
 
 (본문)
 
+title과 summary에는 쌍따옴표로 묶어줘.
 마지막 줄에 FILENAME: ${todayStr}-us-daily-(영문키워드) 형식으로 파일명도 출력해줘. 키워드는 영문 1~2단어로.`;
 
   try {
