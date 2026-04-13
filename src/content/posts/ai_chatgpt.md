@@ -1,3 +1,4 @@
+---
 title: "ChatGPT가 기업을 바꾸는 법 - 2026년 OpenAI 기업 보고서가 말하는 5가지 사실"
 date: 2026-04-11
 summary: "OpenAI 기업 보고서에 따르면 75%의 직원이 AI로 하루 40~60분을 절약하고 있다. Fortune 500 중 92%가 OpenAI 기술을 도입했다."
