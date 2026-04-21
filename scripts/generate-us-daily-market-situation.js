@@ -62,7 +62,7 @@ async function generateMarketPost() {
   }
 
   // 2단계: Gemini AI로 블로그 글 생성
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`;
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash:generateContent`;
 
   const prompt = `당신은 전문 주식 분석가이자 친근한 블로거입니다. 당신의 닉네임은 'yulyul'입니다. ${yesterdayStr}(미국 현지 시각 기준)의 미국 주식 시장 시황을 바탕으로 블로그 글을 작성해 주세요.
 

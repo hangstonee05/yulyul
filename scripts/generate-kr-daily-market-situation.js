@@ -69,7 +69,7 @@ async function generateKRMarketPost() {
 
   // [2단계] Gemini AI로 블로그 글 생성
   // 요청하신 전용 엔드포인트 사용
-  const endpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
+  const endpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash:generateContent";
 
   // 프롬프트 작성 (요청하신 가이드라인을 충실히 반영)
   const prompt = `당신은 전문 주식 분석가이자 친근한 블로거입니다. 당신의 닉네임은 'yulyul'입니다. ${todayStr}(한국 시각 기준)의 한국 주식 시장 시황을 바탕으로 블로그 글을 작성해 주세요.
